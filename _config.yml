@@ -4,16 +4,16 @@
 
 # Site
 title: Tinker's Blog
-subtitle:
+subtitle: 
 description: Blog
-keywords: Java,Spring Cloud # edit for Theme.shoka
+keywords: Java,Spring Cloud,ArchLinux # edit for Theme.shoka
 author: Tinker
 language: zh-CN # 这里只可以选 zh-CN、zh-HK、zh-TW、ja、en 这几个格式
-timezone: 'Asia/Nanjing'
+timezone: 'Asia/Shanghai'
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://blog.spylovetinker.cn
 root: /
 permalink: :title/ # edit for Theme.shoka
 permalink_defaults:
@@ -52,10 +52,9 @@ prismjs:
 # Category & Tag
 default_category: uncategorized
 category_map: # edit for Theme.shoka
-  计算机科学: computer-science
   Java: java
-  二进制杂谈: note
-  零基础学Java语言-浙江大学-翁恺: course-1
+  Linux: linux
+  ArchLinux: archlinux
   Theme Shoka Documentation: theme-shoka-doc
 tag_map:
 
@@ -145,20 +144,20 @@ minify:
     exclude:
       - '**/*.min.js'
 
-# algolia:
-#   appId:
-#   apiKey:
-#   adminApiKey:
-#   chunkSize: 5000
-#   indexName:
-#   fields:
-#     - title #必须配置
-#     - path #必须配置
-#     - categories #推荐配置
-#     - content:strip:truncate,0,4000
-#     - gallery
-#     - photos
-#     - tags
+algolia:
+  appId: VZ4G4FBS5G
+  apiKey: 60c3fce7bb1953ba6647a991a5e3c58b
+  adminApiKey: e4461ea64c0bc84c157869f0440f85af
+  chunkSize: 5000
+  indexName: tinker
+  fields:
+    - title #必须配置
+    - path #必须配置
+    - categories #推荐配置
+    - content:strip:truncate,0,4000
+    - gallery
+    - photos
+    - tags
 
 feed:
     limit: 20
