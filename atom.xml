@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://blog.spylovetinker.cn</id>
+    <title>Tinker&#39;s Blog</title>
+    <subtitle></subtitle>
+    <icon>https://blog.spylovetinker.cn/images/favicon.ico</icon>
+    <link href="https://blog.spylovetinker.cn" />
+    <author>
+      <name>Tinker</name>
+    </author>
+    <updated>2020-12-22T02:29:45.481Z</updated>
+    <category term="Java" />
+    <category term="Spring Cloud" />
+    <category term="ArchLinux" />
+    <entry>
+        <id>https://blog.spylovetinker.cn/archlinux-install/</id>
+        <title>ArchLinux安装配置手册[系统篇]</title>
+        <link rel="alternate" href="https://blog.spylovetinker.cn/archlinux-install/"/>
+        <content type="html">&lt;h1 id=&#34;安装前的准备&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#安装前的准备&#34;&gt;#&lt;/a&gt; 安装前的准备&lt;/h1&gt;
+&lt;p&gt;镜像下载地址：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9hcmNobGludXgub3JnL2Rvd25sb2FkLw==&#34;&gt;https://archlinux.org/download/&lt;/span&gt;&lt;/p&gt;
+&lt;div class=&#34;note default&#34;&gt;
+&lt;p&gt;未使用过 Linux 的用户，建议先了解一下 Linux&lt;/p&gt;
+&lt;/div&gt;
+&lt;h1 id=&#34;启动live环境&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#启动live环境&#34;&gt;#&lt;/a&gt; 启动 Live 环境&lt;/h1&gt;
+&lt;p&gt;（1）制作启动盘&lt;/p&gt;
+&lt;p&gt;如果你是 Windows 用户，你可以使用 Rufus 来制作，具体使用方法你可以查阅一下百度。&lt;/p&gt;
+&lt;p&gt;如果你是 Linux 用户，你只需要使用 dd 命令即可，相信你肯定会的。&lt;/p&gt;
+&lt;p&gt;（2）进入 Live 环境&lt;/p&gt;
+&lt;p&gt;选择从带有 Arch 安装文件的媒介启动通常是在你电脑开机的时候按下某个按键，一般会在启动画面有提示。不同的主板按键不同。&lt;/p&gt;
+&lt;p&gt;当 Arch 菜单出现时，选择 Boot Arch Linux 并按 Enter 进入安装环境。&lt;/p&gt;
+&lt;h1 id=&#34;验证启动模式重要&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#验证启动模式重要&#34;&gt;#&lt;/a&gt; 验证启动模式（重要）&lt;/h1&gt;
+&lt;p&gt;可以列出 efivars 目录以验证启动模式：&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;ls&lt;/span&gt; /sys/firmware/efi/efivars&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;如果目录不存在，系统可能以 BIOS 或 CSM 模式启动，详见您的主板手册。&lt;/p&gt;
+&lt;p&gt;如果目录存在。系统就是以 UEFI 启动。&lt;/p&gt;
+&lt;p&gt;请记住你的启动模式！！！&lt;/p&gt;
+&lt;h1 id=&#34;连接网络&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#连接网络&#34;&gt;#&lt;/a&gt; 连接网络&lt;/h1&gt;
+&lt;div class=&#34;note default&#34;&gt;
+&lt;p&gt;请选择其中一种方式连接&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;1. 连接网线&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;dhcpcd&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;2. 连接 WiFi&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;wifi-menu&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;目前 wifi-menu 连接工具已经被移除，请参照最新的 wiki 文档使用新的工具&lt;/p&gt;
+&lt;h1 id=&#34;分区方案&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#分区方案&#34;&gt;#&lt;/a&gt; 分区方案&lt;/h1&gt;
+&lt;p&gt;BIOS with MBR&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;挂载点&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;分区&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;分区类型&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;建议大小&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;/mnt&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;/dev/sda1&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Linux&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;剩余空间&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;[SWAP]&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;/dev/sda2&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Linux swap&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;More than 512 MiB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;UEFI with GPT&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;挂载点&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;分区&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;分区类型&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;建议大小&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;/mnt/boot&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;/dev/sda1&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;EFI 系统分区&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;265–512 MiB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;/mnt&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;/dev/sda2&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Linux x86-64 root (/)&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;剩余空间&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;[SWAP]&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;/dev/sda3&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Linux swap&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;More than 512 MiB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class=&#34;note warning&#34;&gt;
+&lt;p&gt;分区方案解读：如果你是以 BIOS 模式启动，你就无须创建和挂载 /boot 分区。&lt;/p&gt;
+&lt;p&gt;如果你是以 UEFI 模式启动，那你就必须创建和挂载 /boot 分区&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;#开始分区&lt;/p&gt;
+&lt;div class=&#34;note default&#34;&gt;
+&lt;p&gt;在那之前，建议你先了解一下以下分区的作用&lt;/p&gt;
+&lt;/div&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;/ &lt;span class=&#34;token comment&#34;&gt;#根目录&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;/home &lt;span class=&#34;token comment&#34;&gt;#家目录&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;/boot &lt;span class=&#34;token comment&#34;&gt;#引导分区&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;swap &lt;span class=&#34;token comment&#34;&gt;#交换分区&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;格式化分区&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#格式化分区&#34;&gt;#&lt;/a&gt; 格式化分区&lt;/h1&gt;
+&lt;p&gt;当分区建立好了，这些分区都需要使用适当的文件系统进行格式化&lt;/p&gt;
+&lt;div class=&#34;note warning&#34;&gt;
+&lt;p&gt;注意：请根据自己的分区情况进行对应的格式化，这里的硬盘分区只是作为例子，请根据自己实际情况进行操作&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;/&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;mkfs.ext4 /dev/sda1&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;/home&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;mkfs.ext4 /dev/sda2&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;/boot（BIOS 启动的不需要)&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;mkfs.fat -F32 /dev/sda3&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;swap&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;mkswap&lt;/span&gt; /dev/sda4&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;swapon&lt;/span&gt; /dev/sda4&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;挂载分区&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#挂载分区&#34;&gt;#&lt;/a&gt; 挂载分区&lt;/h1&gt;
+&lt;p&gt;/&lt;br /&gt;
+ 将 / 分区挂载到 /mnt&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;mount&lt;/span&gt; /dev/sda1 /mnt&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;/home&lt;br /&gt;
+/mnt 下创建 /home 文件&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;mkdir&lt;/span&gt; /mnt/home&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;挂载 /home 分区&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;mount&lt;/span&gt; /dev/sda2 /mnt/home&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;/boot（BIOS 启动的不需要）&lt;br /&gt;
+/mnt 下创建 /boot&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;mkdir&lt;/span&gt; /mnt/boot&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;挂载引导分区&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;mount&lt;/span&gt; /dev/sda3 /mnt/boot&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;安装基础软件包&lt;br /&gt;
+ base 软件包并没有包含全部 live 环境中的程序，packages.x86_64 页面包含了它们的差异。需要额外安装：&lt;/p&gt;
+&lt;p&gt;管理所用文件系统 的用户工具&lt;br /&gt;
+访问 RAID 或 LVM 分区的工具&lt;br /&gt;
+未包含在 linux-firmware 中的额外固件&lt;br /&gt;
+联网需要的程序&lt;br /&gt;
+文本编辑器，&lt;br /&gt;
+ 访问 man 和 info 页面的工具： man-db, man-pages 和 texinfo.&lt;br /&gt;
+ 如果你还想安装其他软件包组比如 base-devel，请将他们的名字添加到 pacstrap 后，并用空格隔开。你也可以在 #Chroot 之后使用 pacman 手动安装软件包或组。&lt;/p&gt;
+&lt;div class=&#34;note default&#34;&gt;
+&lt;p&gt;如果你看不懂上面在说什么，那你跟着我运行下面的命令就行了&lt;/p&gt;
+&lt;/div&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;pacstrap /mnt base linux linux-firmware base-devel &lt;span class=&#34;token function&#34;&gt;vi&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;vim&lt;/span&gt; &lt;span class=&#34;token function&#34;&gt;nano&lt;/span&gt; dhcpcd&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;配置系统&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#配置系统&#34;&gt;#&lt;/a&gt; 配置系统&lt;/h1&gt;
+&lt;p&gt;Fstab&lt;br /&gt;
+ 用以下命令生成 fstab 文件 (用 -U 或 -L 选项设置 UUID 或卷标)：&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;genfstab -U /mnt &lt;span class=&#34;token operator&#34;&gt;&gt;&gt;&lt;/span&gt; /mnt/etc/fstab&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;Change root 到新安装的系统：&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;arch-chroot /mnt&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;设置时区&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;ln&lt;/span&gt; -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;hwclock --systohc&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;本地化设置&lt;br /&gt;
+ /etc/locale.gen 是一个仅包含注释文档的文本文件。指定您需要的本地化类型，只需移除对应行前面的注释符号（＃）即可，建议选择带 UTF-8 的项：&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;vim&lt;/span&gt; /etc/locale.gen&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;en_US.UTF-8 UTF-8 &lt;span class=&#34;token comment&#34;&gt;#去掉对应编码前面的井号&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;zh_CN.UTF-8 UTF-8&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;保存退出&lt;br /&gt;
+接着执行 locale-gen 以生成 locale 讯息：&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;locale-gen&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;将 LANG=en_US.UTF-8 加入 /etc/locale.conf&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;vim&lt;/span&gt; /etc/locale.conf&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;设置主机名&lt;br /&gt;
+ xxxxs 是你的主机名（自己取个喜欢的名字）&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token builtin class-name&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;token string&#34;&gt;&#34;xxxx&#34;&lt;/span&gt; &lt;span class=&#34;token operator&#34;&gt;&gt;&gt;&lt;/span&gt; /etc/hostname&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;设置 root 密码&lt;br /&gt;
+使用 passwd 命令为 root 用户增加密码&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;passwd&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;安装 Intel-ucode（非 Inter C PU 不需要）&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;pacman -S intel-ucode&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;div class=&#34;note default&#34;&gt;
+&lt;p&gt;如果你的下载出错，可能是网络断开了，那就再连接一次网络即可&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;安装引导&lt;br /&gt;
+如果你硬盘上还有别的系统，需要安装 os-prober。如果你的系统在别的硬盘单独引导，则不需要。&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;pacman -S os-prober&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;对于 BIOS 系统：&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;pacman -S grub&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;grub-install --target&lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt;i386-pc /dev/sdX    &lt;span class=&#34;token comment&#34;&gt;# sdX 为你的安装硬盘&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;grub-mkconfig&lt;/span&gt; -o /boot/grub/grub.cfg&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;对于 UEFI 系统：&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;pacman -S grub efibootmgr&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;grub-install --target&lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt;x86_64-efi --efi-directory&lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt;/boot --bootloader-id&lt;span class=&#34;token operator&#34;&gt;=&lt;/span&gt;GRUB&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;grub-mkconfig&lt;/span&gt; -o /boot/grub/grub.cfg&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h1 id=&#34;重启&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#重启&#34;&gt;#&lt;/a&gt; 重启&lt;/h1&gt;
+&lt;div class=&#34;note default&#34;&gt;
+&lt;p&gt;系统到这里就安装完毕了&lt;/p&gt;
+&lt;/div&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token builtin class-name&#34;&gt;exit&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;umount&lt;/span&gt; -R /mnt&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;span class=&#34;token function&#34;&gt;reboot&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;div class=&#34;note default&#34;&gt;
+&lt;p&gt;系统的美化就不做过多的赘述，因为可供的选择太多，例如 KDE，GNOME，MATE，i3，dwm，openbox 等。&lt;br /&gt;
+每一个桌面的环境都不尽相同，大家根据自己的喜欢进行选择即可！&lt;/p&gt;
+&lt;/div&gt;
+</content>
+        <updated>2020-12-22T02:29:45.481Z</updated>
+    </entry>
+    <entry>
+        <id>https://blog.spylovetinker.cn/hello-world/</id>
+        <title>Hello World</title>
+        <link rel="alternate" href="https://blog.spylovetinker.cn/hello-world/"/>
+        <content type="html">&lt;p&gt;Welcome to &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9oZXhvLmlvLw==&#34;&gt;Hexo&lt;/span&gt;! This is your very first post. Check &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9oZXhvLmlvL2RvY3Mv&#34;&gt;documentation&lt;/span&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9oZXhvLmlvL2RvY3MvdHJvdWJsZXNob290aW5nLmh0bWw=&#34;&gt;troubleshooting&lt;/span&gt; or you can ask me on &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcw==&#34;&gt;GitHub&lt;/span&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;quick-start&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#quick-start&#34;&gt;#&lt;/a&gt; Quick Start&lt;/h2&gt;
+&lt;h3 id=&#34;create-a-new-post&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#create-a-new-post&#34;&gt;#&lt;/a&gt; Create a new post&lt;/h3&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;$ hexo new &lt;span class=&#34;token string&#34;&gt;&#34;My New Post&#34;&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;More info: &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvd3JpdGluZy5odG1s&#34;&gt;Writing&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;run-server&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#run-server&#34;&gt;#&lt;/a&gt; Run server&lt;/h3&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;$ hexo server&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;More info: &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvc2VydmVyLmh0bWw=&#34;&gt;Server&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;generate-static-files&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#generate-static-files&#34;&gt;#&lt;/a&gt; Generate static files&lt;/h3&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;$ hexo generate&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;More info: &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9oZXhvLmlvL2RvY3MvZ2VuZXJhdGluZy5odG1s&#34;&gt;Generating&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;deploy-to-remote-sites&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#deploy-to-remote-sites&#34;&gt;#&lt;/a&gt; Deploy to remote sites&lt;/h3&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;$ hexo deploy&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;More info: &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvb25lLWNvbW1hbmQtZGVwbG95bWVudC5odG1s&#34;&gt;Deployment&lt;/span&gt;&lt;/p&gt;
+</content>
+        <updated>2020-12-18T19:45:37.063Z</updated>
+    </entry>
+</feed>
