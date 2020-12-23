@@ -182,3 +182,26 @@ feed:
 # By default, the page judges whether to turn on the dark mode according to the device settings or user selection
 # if `true`, the page will be displayed directly as Dark Mode, unless the user makes another choice
 darkmode: true
+
+# hexo-neat
+# 博文压缩
+neat_enable: true
+# 压缩html
+neat_html:
+  enable: true
+  exclude:
+# 压缩css  
+neat_css:
+  enable: true
+  exclude:
+    - '**/*.min.css'
+# 压缩js
+neat_js:
+  enable: true
+  mangle: true
+  output:
+  compress:
+  exclude:
+    - '**/*.min.js'
+    - '**/jquery.fancybox.pack.js'
+    - '**/index.js' 
