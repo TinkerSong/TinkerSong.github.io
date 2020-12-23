@@ -55,6 +55,7 @@ category_map: # edit for Theme.shoka
   Java: java
   Linux: linux
   ArchLinux: archlinux
+  Hexo: hexo
   Theme Shoka Documentation: theme-shoka-doc
 tag_map:
 

@@ -1,7 +1,8 @@
 ---
 title: ArchLinux安装配置手册[系统篇]
+categories:
+- [ArchLinux]
 ---
-
 # 安装前的准备
 镜像下载地址：https://archlinux.org/download/
 :::default
